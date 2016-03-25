@@ -1,0 +1,2 @@
+# setlist.fm-scraper
+Python scraper that pulls down shows and info related to each for a specific venue, and dumps them into .json file. Example case is for The Boathouse, which was in Norfolk, Virginia (RIP) until Hurricane Isabel washed most of it away in 2003. Ideally, this will pull down all the data for every show from a venue listed on setlist.fm, including Band, Setlist, Venue (doh), Date, and Tour. FORKER BEWARE: not all of this is implemented as of yet!
