@@ -1,6 +1,6 @@
 from lxml import html
 import requests
-import re
+import json
 
 setlistFMURLCOM = "http://setlist.fm/"
 venueShowsResultsURLDomain = setlistFMURLCOM + "venue/the-boathouse-norfolk-va-usa-2bd6387a.html";
@@ -38,6 +38,17 @@ showTotalDocuments = tree.xpath('//ul[@class="listPagingNavigator text-center hi
 
 showLastBreadcrumbURL = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/@href')
 print([s.replace('../', setlistFMURLCOM) for s in showLastBreadcrumbURL]) # remove all the 8s
+print([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', '') for s in showLastBreadcrumbURL])
+totalpages = ([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', '') for s in showLastBreadcrumbURL])
+
+## print the numbers of pages in venue's search results
+for page in totalpages:
+	for i in range(int(page)):
+		print 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', i
+		# need to fix gap in url + page results value
+		# need to compensate for first (0), and last (51) values = make them correct
+
+print totalpages
 # .replace("../", "")
 # print showLastBreadcrumbURL
 # now need to crawl all the documents = showTotalDocuments - 1
