@@ -37,7 +37,7 @@ showSetList = tree.xpath('//div[@class="setSummary"]/ol[@class="list-inline"]/li
 showTotalDocuments = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/text()')
 
 showLastBreadcrumbURL = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/@href')
-print([s.replace('../', '') for s in showLastBreadcrumbURL]) # remove all the 8s
+print([s.replace('../', setlistFMURLCOM) for s in showLastBreadcrumbURL]) # remove all the 8s
 # .replace("../", "")
 # print showLastBreadcrumbURL
 # now need to crawl all the documents = showTotalDocuments - 1
