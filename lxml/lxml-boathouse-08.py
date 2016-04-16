@@ -37,21 +37,44 @@ showSetList = tree.xpath('//div[@class="setSummary"]/ol[@class="list-inline"]/li
 showTotalDocuments = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/text()')
 
 showLastBreadcrumbURL = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/@href')
-print([s.replace('../', setlistFMURLCOM) for s in showLastBreadcrumbURL]) # remove all the 8s
-print([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', '') for s in showLastBreadcrumbURL])
+# print([s.replace('../', setlistFMURLCOM) for s in showLastBreadcrumbURL]) # remove all the 8s
+# print([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', '') for s in showLastBreadcrumbURL])
 totalpages = ([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', '') for s in showLastBreadcrumbURL])
 
 ## print the numbers of pages in venue's search results
-for page in totalpages:
-	for i in range(int(page)):
+for searchResults in totalpages:
+	with open('setlist.fm-venue-show-history.json', 'w') as outfile:
+		for i in range(int(searchResults)):
 		# store pages to be scraped full paths in a list
-		pagesToBeScraped = 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(i)
+			fix = i + 1
+			
+			pagesToBeScraped = 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(fix)
+			#scrapeDeez = i + 1
 		
-		print 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(i)
+			page = requests.get(pagesToBeScraped)
+			# page = requests.get(scrapeDeez)
+			tree = html.fromstring(page.content)
+		
+			showDateMonths = tree.xpath('//span[@class="month"]/text()')
+			showTours = tree.xpath('//span[contains(text(),"Tour:")]/strong/a/text()')
+			showVenues = tree.xpath('//span[contains(text(),"Venue:")]/strong/a/span/text()')
+			showSetLists = tree.xpath('//div[@class="setSummary"]/ol[@class="list-inline"]/li/text()')
+		# print showDateMonths
+			jsonOutput = '{', showDateMonths ,'},{', showTours ,'},{', showVenues ,'},{', showSetLists ,'}'
+		# with open('setlists-08.json', 'w') as outfile:
+			json.dump(jsonOutput, outfile)
+			# print "setlist.fm scraper is complete! data of venue's show history in 'setlist.fm-venue-show-history.json' file"
+			print "Search Results Page: " + str(fix) + " Scraped!"
+	print "setlist.fm scraper is complete! data of venue's show history in 'setlist.fm-venue-show-history.json' file"
+		# print showTours
+		
+		# print 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(i)
+		# jsonOutput = '{', jsonOutputA ,'},{', jsonOutputB ,'},{', jsonOutputC ,'},{', jsonOutputD ,'},{', jsonOutputE ,'},{', jsonOutputF ,'},{', jsonOutputG ,'},{', jsonOutputH ,'},{', jsonOutputI ,'},{', jsonOutputJ ,'}'
 		# need to fix gap in url + page results value
 		# need to compensate for first (0), and last (51) values = make them correct
 
-print totalpages
+
+# print totalpages
 # .replace("../", "")
 # print showLastBreadcrumbURL
 # now need to crawl all the documents = showTotalDocuments - 1
@@ -63,9 +86,9 @@ print totalpages
 
 # then print/save as json/csv
 
-venueShowsResultsDocuments = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-venueShowsResultsDocumentsTotal = showTotalDocuments
-for documentPageNumber in range(len(venueShowsResultsDocuments)):
-	print venueShowsResultsURL + str(documentPageNumber)
+# venueShowsResultsDocuments = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+# venueShowsResultsDocumentsTotal = showTotalDocuments
+# for documentPageNumber in range(len(venueShowsResultsDocuments)):
+# 	print venueShowsResultsURL + str(documentPageNumber)
 
 # this needs fixing
