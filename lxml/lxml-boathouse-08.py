@@ -44,7 +44,10 @@ totalpages = ([s.replace('../venue/the-boathouse-norfolk-va-usa-2bd6387a.html?pa
 ## print the numbers of pages in venue's search results
 for page in totalpages:
 	for i in range(int(page)):
-		print 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=', i
+		# store pages to be scraped full paths in a list
+		pagesToBeScraped = 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(i)
+		
+		print 'http://setlist.fm/venue/the-boathouse-norfolk-va-usa-2bd6387a.html?page=' + str(i)
 		# need to fix gap in url + page results value
 		# need to compensate for first (0), and last (51) values = make them correct
 
