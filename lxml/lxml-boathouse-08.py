@@ -1,5 +1,6 @@
 from lxml import html
 import requests
+import re
 
 setlistFMURLCOM = "http://setlist.fm/"
 venueShowsResultsURLDomain = setlistFMURLCOM + "venue/the-boathouse-norfolk-va-usa-2bd6387a.html";
@@ -36,6 +37,9 @@ showSetList = tree.xpath('//div[@class="setSummary"]/ol[@class="list-inline"]/li
 showTotalDocuments = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/text()')
 
 showLastBreadcrumbURL = tree.xpath('//ul[@class="listPagingNavigator text-center hidden-print"]/li/a[@title="Go to last page"]/@href')
+print([s.replace('../', '') for s in showLastBreadcrumbURL]) # remove all the 8s
+# .replace("../", "")
+# print showLastBreadcrumbURL
 # now need to crawl all the documents = showTotalDocuments - 1
 # define url, append document variable as you go up in for loop
 
